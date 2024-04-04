@@ -1,13 +1,16 @@
 const express = require('express');
 const axios = require('axios');
-const app = express();
-
 const { v4: uuidv4 } = require('uuid');
 
-const productsMap = {}; // Map to store products with their IDs
+const router = express.Router();
 
-// GET /categories/categoryname/products ROUTE
-app.get('/categories/:category/products', async (req, res) => {
+const productsMap = {}; // Map to store products with their IDs
+const companies = ["AMZ", "FLP", "SNP", "MYN", "AZO"];
+// const categories = ["Phone", "Computer", "TV", "Earphone", "Tablet", "Charger", "Mouse", "Keypad", "Bluetooth", "Pendrive", "Remote", "Speaker", "Headset", "Laptop", "PC"];
+
+  
+// GET /categories/categoryname/products ROUTE FOR SEARCHING FROM SPECIFIC CATEGORY
+router.get('/:category/products', async (req, res) => {
     const category = req.params.category;
     const searchQuery = req.query.search || ''; // Default to empty string
     const n = parseInt(req.query.n) || 10; // default to 10 products
@@ -17,7 +20,6 @@ app.get('/categories/:category/products', async (req, res) => {
     try {
         let allProducts = [];
 
-        // Fetching products from each company
         for (const company of companies) {
             const response = await axios.get(`http://20.244.56.144/test/companies/${company}/categories/${category}/products`, {
                 params: {
@@ -27,26 +29,23 @@ app.get('/categories/:category/products', async (req, res) => {
                 }
             });
 
-            // Extract and format products data
             const formattedProducts = response.data.map(product => {
-                const productId = generateUUID(); // Genarating  unique ID for each product
-                productsMap[productId] = { // Saving product with its ID
+                const productId = generateUUID();
+                productsMap[productId] = {
                     id: productId,
                     company,
                     name: product.name,
                     price: product.price,
                     rating: product.rating,
-                    discount: product.discount, 
-                    availability: product.availability, // add details mentioned in question added
-                 
+                    discount: product.discount,
+                    availability: product.availability
                 };
-                return productId; // Returning product ID
+                return productId;
             });
 
             allProducts = allProducts.concat(formattedProducts);
         }
 
-        // Sorting based on the provided filter
         switch (sort) {
             case 'price_asc':
                 allProducts.sort((a, b) => productsMap[a].price - productsMap[b].price);
@@ -72,8 +71,7 @@ app.get('/categories/:category/products', async (req, res) => {
 });
 
 // GET /categories/categoryname/products/:productid ROUTE
-//we can locally return the data, no need to call the TEST API for the data, as we stored it
-app.get('/categories/:category/products/:productid', (req, res) => {
+router.get('/:category/products/:productid', (req, res) => {
     const productId = req.params.productid;
     const product = productsMap[productId];
 
@@ -88,6 +86,4 @@ function generateUUID() {
     return uuidv4();
 }
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-});
+module.exports = router;
