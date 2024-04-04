@@ -1,8 +1,7 @@
 # RA2111003011705
 affordmed online test
 
-**Hello Team,
-**
+**Hello Team,**
 I have developed routes for filtering products based on their categories and other variables. However, I encountered an issue when attempting to make API calls to the test company server. Despite multiple attempts using the bearer token in the headers, it consistently returns an "Invalid Authorization Token" error.
 
 I have been using Postman for API testing and am comfortable with it.
