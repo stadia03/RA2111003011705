@@ -8,14 +8,14 @@ I have been using Postman for API testing and am comfortable with it.
 
 *For getting Client ID*
 ![image](https://github.com/stadia03/RA2111003011705/assets/93596846/4790ed6c-11bd-48c0-a634-b06c88018cc7)
-*
-For the access token*
+
+*For the access token*
 ![image](https://github.com/stadia03/RA2111003011705/assets/93596846/2300254a-545d-4a75-bcdc-aff327c68648)
 
 *But everytime I try to trigger any route it shows Invalid Token, or error 404*
 ![image](https://github.com/stadia03/RA2111003011705/assets/93596846/ef40a7a0-0a45-416f-9af3-5247ed544d68)
 
-**So, let me explain What I have builded, **
+**So, let me explain What I have builded,**
 
 <img src="https://github.com/stadia03/RA2111003011705/assets/93596846/4933a7cf-bab6-467f-939f-e8a8ef2c3f36" width="500">
 Here I have defined a route which will take category as params and other variables such as N: no. of products , page no. and sorting criteria  with default values set.
